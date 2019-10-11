@@ -22,9 +22,9 @@ class HomePage extends StatefulWidget {
 
   HomePage() {
     items = [];
-    items.add(Item(title: "Banana", done: false));
-    items.add(Item(title: "Abacate", done: true));
-    items.add(Item(title: "Laranja", done: false));
+    items.add(Item(title: "Task 01", done: false));
+    items.add(Item(title: "Task 02", done: true));
+    items.add(Item(title: "Task 03", done: false));
   }
 
   @override
@@ -34,11 +34,23 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var newTaskCtrl = TextEditingController();
 
+  void add() {
+    if (newTaskCtrl.text.isEmpty) return;
+
+    setState(() {
+      widget.items.add(
+        Item(title: newTaskCtrl.text, done: false),
+      );
+      newTaskCtrl.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: TextFormField(
+          controller: newTaskCtrl,
           keyboardType: TextInputType.text,
           style: TextStyle(
             color: Colors.white,
@@ -66,6 +78,11 @@ class _HomePageState extends State<HomePage> {
             },
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: add,
+        backgroundColor: Colors.pink,
+        child: Icon(Icons.save),
       ),
     );
   }
